@@ -90,7 +90,7 @@ class SignalResolutionView(discord.ui.View):
             new_embed.set_footer(text=embed.footer.text if embed.footer else None)
             new_embed.timestamp = embed.timestamp
 
-            # Preserve original image if present
+            # Preserve original image even if local file is missing
             if embed.image and embed.image.url:
                 new_embed.set_image(url=embed.image.url)
 
@@ -98,7 +98,7 @@ class SignalResolutionView(discord.ui.View):
                 if isinstance(item, discord.ui.Button):
                     item.disabled = True
 
-            await mensaje.edit(embed=new_embed, view=self, attachments=mensaje.attachments)
+            await mensaje.edit(embed=new_embed, view=self)
             print("[DEBUG] mensaje.edit ejecutado correctamente.")
             await log_to_channel(interaction.client, f"✅ Señal actualizada visualmente: {self.activo} - {result_text}")
 
